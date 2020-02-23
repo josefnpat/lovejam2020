@@ -3,3 +3,4 @@ src/git.lua
 *.love
 Makefile.config
 .DS_Store
+builds/

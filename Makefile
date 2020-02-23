@@ -26,7 +26,7 @@ LOVE=love
 LOVE_VERSION=11.3
 SRC_DIR=src
 GIT_HASH=$(shell git log --pretty=format:'%h' -n 1 ${SRC_DIR})
-GIT_COUNT=$(shell git log --pretty=format:'' ${SRC_DIR} | wc -l)
+GIT_COUNT=1
 GIT_TARGET=${SRC_DIR}/git.lua
 WORKING_DIRECTORY=$(shell pwd)
 
@@ -113,9 +113,9 @@ build_love: love
 build_win32: love
 	mkdir -p ${BUILD_DIR}
 	$(eval TMP := $(shell mktemp -d))
-	cat ${DEPS_DATA}/love-${LOVE_VERSION}.0-win32/love.exe ${LOVE_TARGET} > ${TMP}/${BUILD_BIN_NAME}.exe
-	cp ${DEPS_DATA}/love-${LOVE_VERSION}.0-win32/*.dll ${TMP}
-	cp ${DEPS_DATA}/love-${LOVE_VERSION}.0-win32/${LICENSE_SOURCE} ${TMP}/${LICENSE_TARGET}
+	cat ${DEPS_DATA}/love-${LOVE_VERSION}-win32/love.exe ${LOVE_TARGET} > ${TMP}/${BUILD_BIN_NAME}.exe
+	cp ${DEPS_DATA}/love-${LOVE_VERSION}-win32/*.dll ${TMP}
+	cp ${DEPS_DATA}/love-${LOVE_VERSION}-win32/${LICENSE_SOURCE} ${TMP}/${LICENSE_TARGET}
 	zip -rj ${BUILD_DIR}/${BUILD_WIN32} $(TMP)/*
 	rm -rf $(TMP)
 
@@ -123,9 +123,9 @@ build_win32: love
 build_win64: love
 	mkdir -p ${BUILD_DIR}
 	$(eval TMP := $(shell mktemp -d))
-	cat ${DEPS_DATA}/love-${LOVE_VERSION}.0-win64/love.exe ${LOVE_TARGET} > ${TMP}/${BUILD_BIN_NAME}.exe
-	cp ${DEPS_DATA}/love-${LOVE_VERSION}.0-win64/*.dll ${TMP}
-	cp ${DEPS_DATA}/love-${LOVE_VERSION}.0-win64/${LICENSE_SOURCE} ${TMP}/${LICENSE_TARGET}
+	cat ${DEPS_DATA}/love-${LOVE_VERSION}-win64/love.exe ${LOVE_TARGET} > ${TMP}/${BUILD_BIN_NAME}.exe
+	cp ${DEPS_DATA}/love-${LOVE_VERSION}-win64/*.dll ${TMP}
+	cp ${DEPS_DATA}/love-${LOVE_VERSION}-win64/${LICENSE_SOURCE} ${TMP}/${LICENSE_TARGET}
 	zip -rj ${BUILD_DIR}/${BUILD_WIN64} $(TMP)/*
 	rm -rf $(TMP)
 
@@ -133,7 +133,7 @@ build_win64: love
 build_macos: love
 	mkdir -p ${BUILD_DIR}
 	$(eval TMP := $(shell mktemp -d))
-	cp ${DEPS_DATA}/love.app/ ${TMP}/${BUILD_BIN_NAME}.app -Rv
+	cp -Rv ${DEPS_DATA}/love.app/ ${TMP}/${BUILD_BIN_NAME}.app
 	cp ${LOVE_TARGET} ${TMP}/${BUILD_BIN_NAME}.app/Contents/Resources/${BUILD_BIN_NAME}.love
 	cd ${TMP}; \
 	zip -ry ${WORKING_DIRECTORY}/${BUILD_DIR}/${BUILD_MACOS}.zip ${BUILD_BIN_NAME}.app/
@@ -149,7 +149,7 @@ build_linux64: love
 	cp ${TMP}/usr/bin/love ${TMP}/usr/bin/love_bin
 	cat ${TMP}/usr/bin/love_bin ${LOVE_TARGET} > ${TMP}/usr/bin/love
 	# Todo: update to linux license when this file is updated
-	cp ${DEPS_DATA}/love-${LOVE_VERSION}.0-win32/${LICENSE_SOURCE} ${TMP}/${LICENSE_TARGET}
+	# cp ${DEPS_DATA}/love-${LOVE_VERSION}.0-win32/${LICENSE_SOURCE} ${TMP}/${LICENSE_TARGET}
 	cd ${TMP}; \
 	zip -ry ${WORKING_DIRECTORY}/${BUILD_DIR}/${BUILD_LINUX}.zip *
 	rm -rf $(TMP)
