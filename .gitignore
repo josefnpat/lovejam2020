@@ -1,0 +1,5 @@
+src/git.lua
+*.swp
+*.love
+Makefile.config
+.DS_Store
